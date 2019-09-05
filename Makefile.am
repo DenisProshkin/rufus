@@ -9,11 +9,11 @@ release: all
 	@mv src/$(TARGET)$(EXEEXT) .
 	@sleep 1
 	@$(STRIP) $(TARGET)$(EXEEXT)
-	@upx --lzma $(TARGET)$(EXEEXT)
+	@upx --lzma --best $(TARGET)$(EXEEXT)
 	@mv $(TARGET)$(EXEEXT) $(TARGET)-$(VERSION)$(SUFFIX)$(EXEEXT)
 	@cmd.exe //c _sign.cmd $(TARGET)-$(VERSION)$(SUFFIX)$(EXEEXT)
 
-appx: $(TARGET)-$(VERSION)$(SUFFIX)$(EXEEXT)
+appx:
 	$(file > cmd.sed,$(SEDCMD))
 	@sed -i -e "s/@@TAGVER@@/$(TAGVER)/g" cmd.sed
 	@sed -b -i -f cmd.sed res/appstore/AppxManifest.xml
